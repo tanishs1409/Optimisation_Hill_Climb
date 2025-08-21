@@ -36,20 +36,3 @@ def plot_curves(x, curves, aggregated_curve):
     plt.tight_layout()
     plt.show()
 
-
-def find_lowest_x_for_y(curves, target_y):
-    min_x = float('inf')
-    curve_index = -1
-    found_valid = False
-    print(type(curves))
-    for i, (x, y) in enumerate(curves):
-        if target_y < np.min(y) or target_y > np.max(y):
-            continue  # Skip curves that can't reach the target y
-        idx = (np.abs(y - target_y)).argmin()
-        if x[idx] < min_x:
-            min_x = x[idx]
-            curve_index = i
-            found_valid = True
-    if not found_valid:
-        raise ValueError(f"No curve reaches the target y-value: {target_y}")
-    return curve_index, min_x
