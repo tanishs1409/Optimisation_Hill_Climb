@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def arctan_curves(params, x_range=(0, 1.1, 0.1), num_points=1):
+def arctan_curves(params, x_range=(0, 10, 0.1), num_points=1000):
     x = np.linspace(x_range[0], x_range[1], num_points)
 
     curves = []
@@ -38,7 +38,7 @@ def plot_curves(x, curves, aggregated_curve):
 
 
 def find_lowest_x_for_y(curves, target_y):
-    min_x = 0
+    min_x = float('inf')
     curve_index = -1
     found_valid = False
     print(type(curves))
