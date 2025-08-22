@@ -18,6 +18,9 @@ One of the problems faced here, is that since the values were being stored as tu
 This was resolved by writing an iterative script that created a dictionary for x, y values for each point, saving this as a csv and using that rather than the raw curves data.
 
 ### 3. Hill Climb (optimise.py)
+
+[hill climb info] (https://www.skillcamper.com/blog/hill-climbing-algorithm-in-artificial-intelligence)
+
 A greedy hill-climbing algorithm was implemented to find the most efficient curve that reaches the given target y_value with the lowest x_value.
 Each curve is iterated through, starting from the beginning and only 'climbing' forwards if the next point is closer to the target lift. When no further improvements are found, and if the current point is within a tolerance limit of the target y_value, it checks if the x_value is lower than the best found so far. The tolerance is set at 0.01, but can be changed.
 
