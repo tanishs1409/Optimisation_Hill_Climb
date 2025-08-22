@@ -21,24 +21,3 @@ Each curve is iterated through, starting from the beginning and only 'climbing' 
 
 
 
-### arctan.py
-
-# Purpose:
-
-This module defines functions for generating and visualizing arctangent-based curves, typically used to model diminishing returns (e.g., spend vs. lift).
-
-# Main Functions:
-
-arctan_curves:
- - Generates multiple arctangent curves based on a list of parameter dictionaries (coefficient, divisor).
-
-aggregate_curves:
- - Aggregates multiple curves by averaging their y-values across the x-axis.
-
-plot_curves:
- - Plots individual curves and their aggregated version using Matplotlib.
-
-# Usage:
-
-Import this module into optimise.py to generate and visualize arctangent curves.
-
