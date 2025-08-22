@@ -1,12 +1,4 @@
 
-
-
-# # currently uses a linear interpolation method
-# # try adapting into the arctan transform fit for interpolation
-# # use hill climb (maybe, still dk what hillclimb actually is) 
-# # to find the point where spend vs lift is best ratio... u know what i mean
-# # dL/dS becomes unoptimal 
-
 # # ---------------------------------------------------------------------------------------------------------
 
 # ARCTAN TRANSF0RM INTERPOLATION FOR GRAPH

@@ -26,8 +26,8 @@ def plot_curves(x, curves, aggregated_curve):
     plt.figure(figsize=(10, 6))  # Set figure size
     # plot each individual curve
     for i, y in enumerate(curves):
-        plt.plot(x, y, linestyle='--', label=f"Curve {i+1}")
-    plt.plot(x, aggregated_curve, label="Aggregated Curve", linewidth=2, color="black")
+        plt.plot(x, y)
+    plt.plot(x, aggregated_curve, linestyle = '--', label="Aggregated Curve", linewidth=2, color="black")
     plt.title("Spend vs Lift")
     plt.xlabel("Spend / 000s")
     plt.ylabel("Lift / 000s")

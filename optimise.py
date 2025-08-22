@@ -6,28 +6,40 @@ from scipy.optimize import curve_fit, root_scalar
 import pandas as pd
     # Define different coefficients and divisors for each curve
 params = [
-    {"coefficient": 1.36, "divisor": 2.95},
-    {"coefficient": 2.42, "divisor": 1.66}
+    {"coefficient": 2.22, "divisor": 3.49},
+    {"coefficient": 3.39, "divisor": 3.17},
+    {"coefficient": 2.23, "divisor": 0.23},
+    {"coefficient": 4.61, "divisor": 0.38},
+    {"coefficient": 0.12, "divisor": 3.56},
+    {"coefficient": 1.09, "divisor": 2.42},
+    {"coefficient": 4.93, "divisor": 1.69},
+    {"coefficient": 4.77, "divisor": 1.19},
+    {"coefficient": 1.06, "divisor": 4.33},
+    {"coefficient": 4.73, "divisor": 2.72},
+    {"coefficient": 0.38, "divisor": 4.29},
+    {"coefficient": 1.87, "divisor": 2.51},
+    {"coefficient": 3.92, "divisor": 1.74},
+    {"coefficient": 3.12, "divisor": 0.37},
+    {"coefficient": 4.46, "divisor": 1.63},
+    {"coefficient": 1.65, "divisor": 1.19},
+    {"coefficient": 3.8, "divisor": 0.77},
+    {"coefficient": 0.73, "divisor": 3.52},
+    {"coefficient": 3.9, "divisor": 0.28},
+    {"coefficient": 0.45, "divisor": 2.37}
 ]
 
+
 curves = arctan_curves(params)
-print("curves", curves)
-
 x = curves[0][0]
-
 # extract only the y-values from each curve for aggregation
 y_values = [curve[1] for curve in curves]
-
-
 aggregated_curve = aggregate_curves(y_values)
-
-print("aggcurve", aggregated_curve)
 
 plot_curves(x, y_values, aggregated_curve)
 
 # ---------------------------------------------------------------------------------------------------------
 
-# Flatten the data
+# flatten data
 flattened_data = []
 for x, y_values, param in curves:
     for x, y_values in zip(x, y_values):
@@ -38,54 +50,44 @@ for x, y_values, param in curves:
             "divisor": param["divisor"]
         })
 
-# Create a DataFrame and save to CSV
 df = pd.DataFrame(flattened_data)
 df.to_csv("arctan_fixed.csv", index=False)
 
 # ---------------------------------------------------------------------------------------------------------
 
-# Load the CSV file
 df = pd.read_csv("arctan_fixed.csv")
-
-# Group by curve parameters
 grouped = df.groupby(["coefficient", "divisor"])
-
-# Convert each group into (x_array, y_array) format
 curves = [(group["x"].values, group["y"].values) for _, group in grouped]
 
-# Define the target y-value
-target_y = 1.5
+target_y = 4.6
 
-# Hill climbing algorithm
-def hill_climb_find_lowest_x(curves, target_y):
+def hill_climb(curves, target_y):
     best_x = float("inf")
     best_curve_index = -1
 
     for i, (x, y) in enumerate(curves):
-        # Start at the first index
+        # start at the first index
         current_index = 0
         while current_index < len(y) - 1:
-            # Move to the next index if it gets closer to the target y
+            # move to the next index if it gets closer to the target y
             if abs(y[current_index + 1] - target_y) < abs(y[current_index] - target_y):
                 current_index += 1
             else:
-                break  # Stop climbing when no improvement
+                break  # stop climbing when no improvement
 
-        # Check if this curve reaches the target y within tolerance
-        if abs(y[current_index] - target_y) < 0.05:  # tolerance
+        # check if this curve reaches the target y within tolerance
+        if abs(y[current_index] - target_y) < 0.01:  # tolerance
             if x[current_index] < best_x:
                 best_x = x[current_index]
                 best_curve_index = i
 
     if best_curve_index == -1:
         raise ValueError(f"No curve reaches the target y-value: {target_y} within tolerance.")
-
     return best_curve_index, best_x
 
-# Run the hill climbing algorithm
-curve_index, min_x = hill_climb_find_lowest_x(curves, target_y)
 
-# Output the result
+curve_index, min_x = hill_climb(curves, target_y)
 print(f"Hill Climb: The curve with the lowest x for y={target_y} is curve {curve_index} with x={min_x:.4f}")
 
 # ---------------------------------------------------------------------------------------------------------
+
